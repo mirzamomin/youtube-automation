@@ -1,13 +1,24 @@
+'''
+    * Developed by Momin Baig
+'''
+
+'''
+    1. Imports
+'''
 import os
 import gtts
 import math
 import argparse
 import requests
-from bardapi import Bard, BardCookies, SESSION_HEADERS
+from bardapi import Bard, SESSION_HEADERS
 from pydub import AudioSegment
 from moviepy.editor import VideoFileClip, AudioFileClip
 
-parser = argparse.ArgumentParser(description='A Youtube Automation Script by Momin Baig (02873)')
+'''
+    2. Main Functionality
+'''
+
+parser = argparse.ArgumentParser(description='A Youtube Automation Script by Momin Baig')
 parser.add_argument('topic',help="Topic name.")
 args=parser.parse_args()
 
@@ -24,12 +35,12 @@ no_of_images = 0
 
 
 # Bard Third-party API Package to scrape Script
-token="bAjEZzhNwvxdZiUpIEvPfItdkOnT-m01YOIsCa2RkyhYI8VsxinOy9JjIc1dh50xKHLnnQ."
+token=""
 
 session = requests.Session()
-session.cookies.set("__Secure-1PSID", "bAjEZzhNwvxdZiUpIEvPfItdkOnT-m01YOIsCa2RkyhYI8VsxinOy9JjIc1dh50xKHLnnQ.")
-session.cookies.set( "__Secure-1PSIDCC", "APoG2W9zdsEsTm__acU8Uy9twhdcpsjF6RCMxc1FXztoddq9hjK5icAr1iAGNdHCZxyFJKd3")
-session.cookies.set("__Secure-1PSIDTS", "sidts-CjIBSAxbGYm6LOcXxQcvZWIbmn4yCbwoBlearm41YUeqYtSwsVor8OXm4sEkVLm7wF7TbhAA")
+session.cookies.set("__Secure-1PSID", "")
+session.cookies.set( "__Secure-1PSIDCC", "")
+session.cookies.set("__Secure-1PSIDTS", "")
 session.headers = SESSION_HEADERS
 
 bard = Bard(token=token, session=session)
@@ -41,7 +52,9 @@ text = ''.join(refine)
 audio = gtts.gTTS(lang=lang, text=text, slow=False)
 audio.save(f'audios/{file_name}.mp3')
 
-audio = AudioSegment.from_file(f"audios/{file_name}.mp3")
+audio_path = f"C:\\Users\\momin.baig\\Desktop\\youtube-automation\\audios\\{file_name}.mp3"
+print(audio_path)
+audio = AudioSegment.from_file(audio_path) 
 audio_length = math.ceil(len(audio)/1000)
 
 no_of_images = math.ceil(audio_length / 5)
